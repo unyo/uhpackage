@@ -1,0 +1,30 @@
+{{left_sidebar_enabled=right_sidebar_enabled=False}}
+{{extend 'layout.html'}}
+<style>
+    .undelivered td { font-weight: bold; }
+</style>
+<h1>Recent Packages</h1>
+{{if 'recent_packages' in globals():}}
+<table id="recent_packages">
+    <thead><tr><th>Package ID</th><th>Recieved Date</th><th>Recieved By</th><th>Delivered Date</th><th>Delivered By</th></tr></thead>
+    <tbody>
+    {{for rows in recent_packages:}}
+    <tr{{if not rows.delivered_date:}} class="undelivered"{{pass}}>
+        <td>{{=rows.id}}</td>
+        <td>{{=rows.recieved_date}}</td>
+        <td>{{="%(first_name)s %(last_name)s" % db.auth_user[rows.recieved_by]}}</td>
+        <td>{{=rows.delivered_date}}</td>
+        {{if rows.delivered_by:}}
+        <td>{{="%(first_name)s %(last_name)s" % db.auth_user[rows.delivered_by]}}</td>
+        {{else:}}
+        <td>None</td>
+        {{pass}}
+    </tr>
+    {{pass}}
+    </tbody>
+</table>
+{{else:}}
+<strong>No packages</strong>
+{{pass}}
+{{block left_sidebar}}New Left Sidebar Content{{end}}
+{{block right_sidebar}}New Right Sidebar Content{{end}}

@@ -1,0 +1,61 @@
+{{left_sidebar_enabled=right_sidebar_enabled=False}}
+{{response.files+=['http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css','http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js','http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js']}}
+{{extend 'layout.html'}}
+
+<style>
+#suggestions { position: relative; }
+.suggestions { background: white; border: solid 1px #55A6C8; }
+.suggestions DIV { padding: 2px 4px 2px 4px; }
+.suggestions DIV:hover { background: yellow; }
+#building { width: 14em; }
+#room { width: 4em; }
+#new_record_label, #new_record { display: none; }
+#new_record { margin: 0.5em 0.5em 0.5em 0em; }
+#name { width: 18em; }
+#new_record_label { margin-right: 0.5em; }
+</style>
+
+<h1>Add a Package</h1>
+{{=form}}
+<div id="forwarding" style="display:none"></div>
+<script>
+$(function() {
+    $("#name").autocomplete({
+        source: function(request, response) {
+            $.getJSON("{{=URL('recipient_search')}}.json", { name: request.term }, function(data){
+                response(data.results);
+            });
+        },
+        minLength: 2,
+        select: function(event, ui) {
+            $('#building').val(ui.item.building);
+            $('#room').val(ui.item.room);
+            $('#recipient_id').val(ui.item.recipient_id);
+            $('#new_record_label, #new_record').show();
+            if (ui.item.forwarding) {
+                $('#forwarding').show().html('<strong>Forward package to:</strong> '+ui.item.forwarding);
+            }
+        }
+    });
+});
+</script>
+
+<h2>Last Added: {{if recents:}}{{=recents[0]['id']}}{{else:}}None{{pass}}</h2>
+<h3>
+{{if recents:}}
+{{=recents[0]['building']}} {{=recents[0]['room']}} - {{=recents[0]['first_name']}} {{=recents[0]['last_name']}}
+{{else:}}
+None
+{{pass}}
+</h3>
+<table>
+<thead><tr><th>ID</th><th>Name</th><th>Building</th><th>Room</th></tr></thead>
+<tbody>
+{{for record in recents:}}
+<tr><td>{{=record['id']}}</td><td>{{=record['first_name']}} {{=record['last_name']}}</td><td>{{=record['building']}}</td><td>{{=record['room']}}</td></tr>
+{{pass}}
+</tbody>
+</table>
+
+{{block left_sidebar}}New Left Sidebar Content{{end}}
+{{block right_sidebar}}New Right Sidebar Content{{end}}

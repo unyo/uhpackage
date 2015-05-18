@@ -1,0 +1,12 @@
+{{extend 'layout.html'}}
+<h1>Grant Permissions</h1>
+{{=form}}
+<h2>Permission List</h2>
+<table>
+<thead><tr><th>Group</th><th>Name</th><th>Delete</th></tr></thead>
+<tbody>
+{{for row in permission_list:}}
+<tr><td>{{=row['group']}}</td><td>{{=row['name']}}</td><td><a href="{{=URL('delete_membership',args=[row['id']])}}">delete</td></tr>
+{{pass}}
+</tbody>
+</table>

@@ -1,0 +1,11 @@
+#footer { display: none; }
+body { background-color: #2C6607; background-image: url('../images/package.svg'); background-repeat: no-repeat; background-position: bottom right; background-size: 23.6%; background-attachment: fixed; }
+#wrapper { margin-top: 1.618em; padding: 0.618em 1.618em 2.618em; border-radius: 0.618em; border: 0px solid #c3c6cc; box-shadow: 0 0 1em white; }
+select { height: inherit; }
+#statusbar { border-top: 0px; background: transparent; }
+.sf-menu li { background: #8AA17C; }
+.sf-menu li li { background: #778264; }
+.sf-menu li:hover, .sf-menu li.sfHover, .sf-menu a:focus, .sf-menu a:hover, .sf-menu a:active { background: #93A17C; }
+.sf-menu a, .sf-menu a:visited { color: #FFF7EB; }
+.sf-menu > li:first-child, .sf-menu > li:first-child > a { border-top-left-radius: 1em; border-bottom-left-radius: 1em; border-left:0px; }
+.sf-menu > li:last-child, .sf-menu > li:last-child > a { border-top-right-radius: 1em; border-bottom-right-radius: 1em; }

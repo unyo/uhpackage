@@ -1,0 +1,29 @@
+{{extend 'layout.html'}}
+<style>
+#undelivered { overflow: auto; zoom: 1 }
+#undelivered div { float: left; padding: 0.38em; margin: 0.38em; text-align: center; width: 6.854em; border: 1px solid #444; background-color: #eee; }
+#undelivered a { display: block; text-decoration: none; font-size: 1.618em; }
+</style>
+<h1>Deliver Package</h1>
+{{=form}}
+<div id="undelivered">
+{{for item in undelivered:}}
+<div id="{{=item['id']}}"><a href="{{=URL(args=[item['id']])}}">{{=item['id']}}</a></div>
+{{pass}}
+</div>
+<script>
+$('#no_table_package_id').keyup(function() {
+    search = $('#no_table_package_id').val();
+    if (search!='') {
+        $('#undelivered div').hide();
+        $('#undelivered div[id^='+search+']').show();
+    } else {
+        $('#undelivered div').show();
+    }
+});
+$('#undelivered a').click(function() {
+    $('#no_table_package_id').val($(this).id());
+    $('#no_table_package_id').keyup();
+    return false;
+});
+</script>
